@@ -14,9 +14,10 @@ import java.time.LocalDate;
 @Service
 public class AppointmentService {
 
-    @Autowired
-    private AppointmentRepository repository;
 
+    private final AppointmentRepository repository;
+
+    @Autowired
     public AppointmentService(AppointmentRepository repository){
         this.repository = repository;
     }

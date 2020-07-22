@@ -1,10 +1,14 @@
 package com.aurumTeste.model;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Appointment implements Serializable {
 
 	private static final long serialVersionUID = 3305954123691220214L;
@@ -20,6 +24,7 @@ public class Appointment implements Serializable {
 	private String description;
 	
 	@Column
+	@CreatedDate
 	private LocalDate createdAt;
 
 	public Long getId() {
