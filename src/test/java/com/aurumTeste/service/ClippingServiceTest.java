@@ -9,8 +9,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.Optional;
 
 @DataJpaTest
 class ClippingServiceTest {
@@ -36,7 +36,8 @@ class ClippingServiceTest {
         Clipping c = new Clipping();
         c.setViewed(true);
         c.setId(1L);
-        Mockito.doReturn(c).when(service).findById(1L);
+        Optional<Clipping> optional = Optional.of(c);
+        Mockito.doReturn(optional).when(repository).findById(1L);
     }
 
     @Test
