@@ -3,6 +3,7 @@ package com.aurumTeste.model;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -18,9 +19,11 @@ public class Clipping implements Serializable{
 	private Long id;
 	
 	@Column
+	@NotNull
 	private LocalDate clippingDate;
 	
 	@Column
+	@NotNull
 	private String clippingMatter;
 	
 	@Column
@@ -124,32 +127,10 @@ public class Clipping implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Clipping other = (Clipping) obj;
-		if (classificationType != other.classificationType)
-			return false;
-		if (classifiedDate == null) {
-			if (other.classifiedDate != null)
-				return false;
-		} else if (!classifiedDate.equals(other.classifiedDate))
-			return false;
-		if (classifiedTime == null) {
-			if (other.classifiedTime != null)
-				return false;
-		} else if (!classifiedTime.equals(other.classifiedTime))
-			return false;
-		if (clippingDate == null) {
-			if (other.clippingDate != null)
-				return false;
-		} else if (!clippingDate.equals(other.clippingDate))
-			return false;
 		if (clippingMatter == null) {
 			if (other.clippingMatter != null)
 				return false;
 		} else if (!clippingMatter.equals(other.clippingMatter))
-			return false;
-		if (important == null) {
-			if (other.important != null)
-				return false;
-		} else if (!important.equals(other.important))
 			return false;
 		return true;
 	}

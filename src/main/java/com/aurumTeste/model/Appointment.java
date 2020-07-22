@@ -4,6 +4,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -18,9 +19,11 @@ public class Appointment implements Serializable {
 	private Long id;
 	
 	@Column
+	@NotNull
 	private LocalDate dueDate;
 	
 	@Column
+	@NotNull
 	private String description;
 	
 	@Column
@@ -67,6 +70,11 @@ public class Appointment implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = getResult(prime, result);
+		return result;
+	}
+
+	private int getResult(int prime, int result) {
 		result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((dueDate == null) ? 0 : dueDate.hashCode());
@@ -82,20 +90,10 @@ public class Appointment implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Appointment other = (Appointment) obj;
-		if (createdAt == null) {
-			if (other.createdAt != null)
-				return false;
-		} else if (!createdAt.equals(other.createdAt))
-			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;
 		} else if (!description.equals(other.description))
-			return false;
-		if (dueDate == null) {
-			if (other.dueDate != null)
-				return false;
-		} else if (!dueDate.equals(other.dueDate))
 			return false;
 		return true;
 	}
