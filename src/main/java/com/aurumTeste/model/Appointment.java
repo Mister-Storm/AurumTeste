@@ -17,12 +17,12 @@ public class Appointment implements Serializable {
 	private Long id;
 	
 	@Column
-	@NotNull
+	@NotNull(message = "The field dueDate is required. Please fill it.")
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private LocalDate dueDate;
 	
 	@Column
-	@NotNull
+	@NotNull(message = "The field description is required. Please fill it.")
 	private String description;
 	
 	@Column

@@ -18,12 +18,12 @@ public class Clipping implements Serializable{
 	private Long id;
 	
 	@Column
-	@NotNull
+	@NotNull(message = "The field clippingDate is required. Please fill it.")
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private LocalDate clippingDate;
 	
 	@Column(columnDefinition = "TEXT")
-	@NotNull
+	@NotNull(message = "The field clippingMatter is required. Please fill it.")
 	private String clippingMatter;
 	
 	@Column
