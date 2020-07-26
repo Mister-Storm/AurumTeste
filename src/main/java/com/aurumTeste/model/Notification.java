@@ -1,6 +1,5 @@
 package com.aurumTeste.model;
 
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -8,7 +7,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 public class Notification implements Serializable{
 
 	private static final long serialVersionUID = -4621647115194115623L;
@@ -21,7 +19,6 @@ public class Notification implements Serializable{
 	private String description;
 	
 	@Column
-	@CreatedDate
 	private LocalDate createdAt;
 	
 	@Column

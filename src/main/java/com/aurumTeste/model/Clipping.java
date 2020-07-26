@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 public class Clipping implements Serializable{
 	
 	
