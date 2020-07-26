@@ -28,16 +28,24 @@ public class AppointmentService {
         clippingDate = adjustClippingDataIfNecessary(clippingDate, classifiedDateIsAbsent);
         appointment.setDueDate(clippingDate);
         appointment.setDescription(hearing.toString());
+        appointment.setCreatedAt(LocalDate.now());
         return repository.save(appointment);
     }
 
     private LocalDate adjustClippingDataIfNecessary(LocalDate clippingDate, Boolean classifiedDateIsAbsent) {
         if(classifiedDateIsAbsent) {
-            clippingDate.plusDays(3L);
+            sumDays(clippingDate);
+
             clippingDate = clippingDate.getDayOfWeek().equals(DayOfWeek.SATURDAY) ? clippingDate.plusDays(2L) : clippingDate;
             clippingDate = clippingDate.getDayOfWeek().equals(DayOfWeek.SUNDAY) ? clippingDate.plusDays(1L) : clippingDate;
         }
         return clippingDate;
+    }
+
+    private void sumDays(LocalDate clippingDate) {
+        if(clippingDate.getDayOfWeek().equals(DayOfWeek.FRIDAY) || clippingDate.getDayOfWeek().equals(DayOfWeek.THURSDAY) || clippingDate.getDayOfWeek().equals(DayOfWeek.WEDNESDAY)) {
+            clippingDate.plusDays(5L);
+        } else {clippingDate.plusDays(3L);}
     }
 
     public Page<Appointment> findAll(int page, int size) {
