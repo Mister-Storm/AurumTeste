@@ -1,6 +1,6 @@
 package com.aurumTeste.model;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,16 +19,19 @@ public class Clipping implements Serializable{
 	
 	@Column
 	@NotNull
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private LocalDate clippingDate;
 	
-	@Column
+	@Column(columnDefinition = "TEXT")
 	@NotNull
 	private String clippingMatter;
 	
 	@Column
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private ClassificationTypeEnum classificationType;
 	
 	@Column
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private LocalDate classifiedDate;
 	
 	@Column

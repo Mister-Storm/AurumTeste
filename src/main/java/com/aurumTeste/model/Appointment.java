@@ -1,6 +1,6 @@
 package com.aurumTeste.model;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,6 +18,7 @@ public class Appointment implements Serializable {
 	
 	@Column
 	@NotNull
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private LocalDate dueDate;
 	
 	@Column
@@ -25,6 +26,7 @@ public class Appointment implements Serializable {
 	private String description;
 	
 	@Column
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private LocalDate createdAt;
 
 	public Long getId() {
