@@ -1,19 +1,15 @@
 package com.aurumTeste.service;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.aurumTeste.model.ClassificationTypeEnum;
+import com.aurumTeste.model.Clipping;
+import com.aurumTeste.repository.ClippingRepository;
 import com.aurumTeste.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.aurumTeste.model.Clipping;
-import com.aurumTeste.repository.ClippingRepository;
+import java.util.Optional;
 
 @Service
 public class ClippingService {
@@ -53,11 +49,7 @@ public class ClippingService {
 	
 	public Clipping save(Clipping clipping) {
 		if(clipping.getClassificationType().equals(ClassificationTypeEnum.HEARING)) {
-			if(clipping.getClassifiedDate() != null) {
-				appointmentService.saveForHearing(clipping.getClassifiedDate(), ClassificationTypeEnum.HEARING, false);
-			} else {
-				appointmentService.saveForHearing(clipping.getClippingDate(), ClassificationTypeEnum.HEARING, true);
-			}
+			saveAppointmentIfNecessary(clipping);
 			if(clipping.getImportant()==true) {
 				notificationService.saveForClipping(MESSAGE_TO_NOTIFICATION);
 
@@ -65,6 +57,14 @@ public class ClippingService {
 
 		}
 		return repository.save(clipping);
+	}
+
+	private void saveAppointmentIfNecessary(Clipping clipping) {
+		if(clipping.getClassifiedDate() != null) {
+			appointmentService.saveForHearing(clipping.getClassifiedDate(), ClassificationTypeEnum.HEARING, false);
+		} else {
+			appointmentService.saveForHearing(clipping.getClippingDate(), ClassificationTypeEnum.HEARING, true);
+		}
 	}
 
 	public Clipping markeAsRead(Long id, Boolean viewed) {
