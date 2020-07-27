@@ -50,13 +50,17 @@ public class ClippingService {
 	public Clipping save(Clipping clipping) {
 		if(clipping.getClassificationType().equals(ClassificationTypeEnum.HEARING)) {
 			saveAppointmentIfNecessary(clipping);
-			if(clipping.getImportant()==true) {
-				notificationService.saveForClipping(MESSAGE_TO_NOTIFICATION);
-
-			}
+			saveNotificationIfNecessary(clipping);
 
 		}
 		return repository.save(clipping);
+	}
+
+	private void saveNotificationIfNecessary(Clipping clipping) {
+		if(clipping.getImportant()==true) {
+			notificationService.saveForClipping(MESSAGE_TO_NOTIFICATION);
+
+		}
 	}
 
 	private void saveAppointmentIfNecessary(Clipping clipping) {
