@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class NotificationService {
 
@@ -23,6 +25,7 @@ public class NotificationService {
         Notification notification = new Notification();
         notification.setDescription(messageToNotification);
         notification.setViewed(false);
+        notification.setCreatedAt(LocalDate.now());
         return repository.save(notification);
     }
 
