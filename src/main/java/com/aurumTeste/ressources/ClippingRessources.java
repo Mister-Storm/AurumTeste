@@ -20,6 +20,8 @@ import java.util.Optional;
 @ApiResponses(value = {
 		@ApiResponse(code = 200,
 				message = ResponseMessages.OK_200),
+		@ApiResponse(code = 201,
+				message = ResponseMessages.CREATED_201),
 		@ApiResponse(code = 400,
 				message = ResponseMessages.BAD_REQUEST_400),
 		@ApiResponse(code = 401,

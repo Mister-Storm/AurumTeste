@@ -20,8 +20,6 @@ public class ClippingService {
 
 	private static final String MESSAGE_TO_NOTIFICATION="You have a new important clipping";
 
-	public ClippingService(){}
-	
 	@Autowired
 	public ClippingService(ClippingRepository repository, AppointmentService appointmentService, NotificationService notificationService) {
 		this.repository = repository;
