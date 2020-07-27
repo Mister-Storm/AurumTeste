@@ -55,7 +55,7 @@ public class ClippingService {
 	}
 
 	private void saveNotificationIfNecessary(Clipping clipping) {
-		if(clipping.getImportant()==true) {
+		if(clipping.getImportant()) {
 			notificationService.saveForClipping(MESSAGE_TO_NOTIFICATION);
 
 		}
