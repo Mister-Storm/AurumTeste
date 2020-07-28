@@ -29,12 +29,10 @@ public class ClippingService {
 	
 	public Optional<Clipping> findById(Long id) {
 		Optional<Clipping> optional = repository.findById(id);
-		if (optional.isPresent()) {
-			Clipping clipping = optional.get();
+			Clipping clipping = optional.orElseThrow(ObjectNotFoundException::new);;
 			clipping.setViewed(true);
 			this.save(clipping);
-		}
-		return optional;
+		return Optional.of(clipping);
 	}
 
 	public Page<Clipping> findAll(int page, int size) {
@@ -46,12 +44,19 @@ public class ClippingService {
 
 	
 	public Clipping save(Clipping clipping) {
-		if(clipping.getClassificationType().equals(ClassificationTypeEnum.HEARING)) {
+		if (clipping.getClassificationType() != null) {
+			savesAccessories(clipping);
+		}
+		clipping.setViewed(clipping.getId() != null ? true : false);
+		return repository.save(clipping);
+	}
+
+	private void savesAccessories(Clipping clipping) {
+		if (clipping.getClassificationType().equals(ClassificationTypeEnum.HEARING)) {
 			saveAppointmentIfNecessary(clipping);
 			saveNotificationIfNecessary(clipping);
 
 		}
-		return repository.save(clipping);
 	}
 
 	private void saveNotificationIfNecessary(Clipping clipping) {
