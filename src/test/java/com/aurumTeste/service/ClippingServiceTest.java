@@ -29,7 +29,7 @@ class ClippingServiceTest {
 
     @BeforeEach
     public void setup() {
-        clippingService = new ClippingService(repository, appointmentService, notificationService);
+        clippingService = new ClippingService(repository);
     }
 
     @Test

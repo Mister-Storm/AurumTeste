@@ -1,6 +1,5 @@
 package com.aurumTeste.service;
 
-import com.aurumTeste.model.ClassificationTypeEnum;
 import com.aurumTeste.model.Clipping;
 import com.aurumTeste.repository.ClippingRepository;
 import com.aurumTeste.service.exception.ObjectNotFoundException;
@@ -15,16 +14,11 @@ import java.util.Optional;
 public class ClippingService {
 
 	private ClippingRepository repository;
-	private AppointmentService appointmentService;
-	private NotificationService notificationService;
-
 	private static final String MESSAGE_TO_NOTIFICATION="You have a new important clipping";
 
 	@Autowired
-	public ClippingService(ClippingRepository repository, AppointmentService appointmentService, NotificationService notificationService) {
+	public ClippingService(ClippingRepository repository) {
 		this.repository = repository;
-		this.appointmentService = appointmentService;
-		this.notificationService = notificationService;
 	}
 	
 	public Optional<Clipping> findById(Long id) {
@@ -44,34 +38,8 @@ public class ClippingService {
 
 	
 	public Clipping save(Clipping clipping) {
-		if (clipping.getClassificationType() != null) {
-			savesAccessories(clipping);
-		}
 		clipping.setViewed(clipping.getId() != null ? true : false);
 		return repository.save(clipping);
-	}
-
-	private void savesAccessories(Clipping clipping) {
-		if (clipping.getClassificationType().equals(ClassificationTypeEnum.HEARING)) {
-			saveAppointmentIfNecessary(clipping);
-			saveNotificationIfNecessary(clipping);
-
-		}
-	}
-
-	private void saveNotificationIfNecessary(Clipping clipping) {
-		if(clipping.getImportant()) {
-			notificationService.saveForClipping(MESSAGE_TO_NOTIFICATION);
-
-		}
-	}
-
-	private void saveAppointmentIfNecessary(Clipping clipping) {
-		if(clipping.getClassifiedDate() != null) {
-			appointmentService.saveForHearing(clipping.getClassifiedDate(), ClassificationTypeEnum.HEARING, false);
-		} else {
-			appointmentService.saveForHearing(clipping.getClippingDate(), ClassificationTypeEnum.HEARING, true);
-		}
 	}
 
 	public Clipping markeAsRead(Long id, Boolean viewed) {

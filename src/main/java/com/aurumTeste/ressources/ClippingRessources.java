@@ -1,5 +1,6 @@
 package com.aurumTeste.ressources;
 
+import com.aurumTeste.event.ClippingCreatedEvent;
 import com.aurumTeste.model.Clipping;
 import com.aurumTeste.service.ClippingService;
 import io.swagger.annotations.Api;
@@ -7,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +33,14 @@ import java.util.Optional;
 public class ClippingRessources {
 
 	private final ClippingService service;
-	
+
+	private final ApplicationEventPublisher publisher;
+
+
 	@Autowired
-	public ClippingRessources(ClippingService service) {
-	this.service=service;
+	public ClippingRessources(ClippingService service, ApplicationEventPublisher publisher) {
+		this.service=service;
+		this.publisher = publisher;
 	}
 
 	@ApiOperation(value = "return a clipping for id.")
@@ -63,6 +69,7 @@ public class ClippingRessources {
 	@PostMapping
 	public ResponseEntity<?> save(@RequestBody Clipping clipping) {
 
+		publisher.publishEvent(new ClippingCreatedEvent(this, clipping));
 		return new ResponseEntity<>(service.save(clipping), HttpStatus.CREATED);
 	}
 
